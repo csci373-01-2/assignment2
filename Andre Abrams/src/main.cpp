@@ -18,11 +18,14 @@ int main()
 	int sentence, served;
 	
 	ifstream data("prisoner_data.csv");
+
+	// Returns error if file was not opened correctly
 	if (!data.is_open())
 	{
 		exit(EXIT_FAILURE);
 	}
 	
+	// Skips first line of csv file
 	getline(data, line);
 
 	vector<string> idNum;
@@ -60,8 +63,9 @@ int main()
 	
 	data.close();
 	
-	Jailed p[100]; // Initializing Prisoner class
+	Jailed p[100]; // Initializing Jailed object
 
+	// Assigns object p[i] values from called functions 
 	for (int i = 0; i < idNum.size(); i++)
 	{
 		p[i].setIdNum(idNum[i]);
@@ -70,15 +74,18 @@ int main()
 		p[i].setLastName(lastNameIn[i]);
 		p[i].setFirstName(firstNameIn[i]);
 	}
+
 	// Create array of remaining time
 	int a[100] = {};
 	for(int i = 0; i < idNum.size(); i++)
 		a[i] = p[i].getTimeRemain();
+
 	// Sort ramaining time
 	priority_queue<int, vector<int>, greater<int>> q;
-	for (int b = 0; b < idNum.size(); b++)
-		q.push(a[b]);
+	for (int x = 0; x < idNum.size(); x++)
+		q.push(a[x]);
 
+	// Outputs lowest number at top of queue then drops it
 	while (!q.empty())
 	{
 		cout << q.top() << endl;
